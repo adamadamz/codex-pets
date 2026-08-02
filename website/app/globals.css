@@ -229,6 +229,16 @@ a {
   font-size: 11px;
 }
 
+.gatekeeper-link {
+  display: inline-flex;
+  margin-top: 12px;
+  color: #4f5f20;
+  font-size: 12px;
+  font-weight: 760;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .hero-visual {
   position: relative;
   min-height: 510px;
@@ -618,6 +628,87 @@ a {
 .install-steps p { margin: 10px 0 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
 .install-actions { justify-content: space-between; }
 
+.gatekeeper-help {
+  display: grid;
+  grid-template-columns: 1fr 0.95fr;
+  gap: 38px;
+  margin-top: 42px;
+  padding: 38px;
+  scroll-margin-top: 24px;
+  border: 1px solid var(--ink);
+  border-radius: 18px;
+  background: rgba(201, 255, 79, 0.16);
+}
+
+.gatekeeper-copy .eyebrow {
+  margin-bottom: 13px;
+}
+
+.gatekeeper-copy h3 {
+  margin: 0;
+  font-size: 27px;
+  letter-spacing: -0.04em;
+}
+
+.gatekeeper-copy ol {
+  margin: 23px 0 0;
+  padding-left: 22px;
+}
+
+.gatekeeper-copy li {
+  margin-top: 8px;
+  color: #4f4b43;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.gatekeeper-note {
+  margin: 20px 0 0;
+  color: #777167;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.terminal-card {
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  padding: 24px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--ink);
+  color: #f8f3e9;
+}
+
+.terminal-card > span {
+  margin-bottom: 4px;
+  color: var(--lime);
+  font-family: ui-monospace, "SFMono-Regular", monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.terminal-card code {
+  display: block;
+  padding: 10px 12px;
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f8f3e9;
+  font-family: ui-monospace, "SFMono-Regular", monospace;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.terminal-card p {
+  margin: 4px 0 0;
+  color: #a9a59c;
+  font-size: 9px;
+  line-height: 1.6;
+}
+
 .open-source {
   display: flex;
   align-items: end;
@@ -736,6 +827,7 @@ a {
   .install-steps li,
   .install-steps li:not(:first-child) { min-height: auto; padding: 25px 0; border-right: 0; border-bottom: 1px solid var(--line); }
   .install-actions { align-items: stretch; flex-direction: column; }
+  .gatekeeper-help { grid-template-columns: 1fr; padding: 27px 22px; }
   .install-actions .text-link { align-self: center; }
   .open-source { margin-bottom: 80px; padding: 43px 28px; }
   .site-footer { grid-template-columns: 1fr; }

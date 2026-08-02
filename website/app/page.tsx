@@ -69,8 +69,11 @@ export default function Home() {
             </a>
           </div>
           <p className="release-note">
-            v0.1 Preview · 免费开源 · 当前安装包尚未完成 Apple 公证
+            v0.1 Preview · 免费开源 · 首次安装需在“隐私与安全”中允许打开
           </p>
+          <a className="gatekeeper-link" href="#install-help">
+            看到“Apple 无法验证”？查看正确打开方式 ↓
+          </a>
         </div>
 
         <div className="hero-visual" aria-label="花花熊猫桌面宠物预览">
@@ -162,9 +165,29 @@ export default function Home() {
           </li>
           <li>
             <span className="step-number">3</span>
-            <div><h3>首次右键打开</h3><p>Preview 尚未 Apple 公证，请在访达中右键 App 并选择“打开”。</p></div>
+            <div><h3>在系统设置允许</h3><p>先尝试打开一次，然后前往“隐私与安全”，点击“仍要打开”。</p></div>
           </li>
         </ol>
+        <div className="gatekeeper-help" id="install-help">
+          <div className="gatekeeper-copy">
+            <p className="eyebrow">APPLE 无法验证 CODEXPETS？</p>
+            <h3>App 没坏，是 Gatekeeper 在拦截。</h3>
+            <ol>
+              <li>在警告窗口点击“完成”，不要选择“移到废纸篓”。</li>
+              <li>打开“系统设置 → 隐私与安全”，向下找到安全性区域。</li>
+              <li>在“CodexPets 已被阻止”旁点击“仍要打开”，再确认一次。</li>
+            </ol>
+            <p className="gatekeeper-note">
+              当前开源 Preview 使用 ad-hoc 签名，尚未完成 Developer ID 签名与 Apple 公证。
+            </p>
+          </div>
+          <div className="terminal-card">
+            <span>可选 · 只解除 CodexPets 的隔离标记</span>
+            <code>xattr -dr com.apple.quarantine /Applications/CodexPets.app</code>
+            <code>open /Applications/CodexPets.app</code>
+            <p>请先把 App 移到“应用程序”。不要全局关闭 Gatekeeper。</p>
+          </div>
+        </div>
         <div className="install-actions">
           <a className="button button-primary" href={downloadUrl}>下载 Preview ↓</a>
           <a className="text-link" href={releasesUrl}>查看所有版本 ↗</a>

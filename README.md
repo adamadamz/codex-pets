@@ -13,9 +13,18 @@ Codex 动态宠物 → macOS 桌面伙伴。读取标准宠物图集、渲染和
 
 GitHub Releases 提供 macOS 14+ 的 Universal 构建，兼容 Apple Silicon 与 Intel Mac。
 
-当前 Preview 使用 ad-hoc 签名，尚未完成 Developer ID 签名与 Apple 公证。首次打开请在访达中
-右键 `CodexPets.app` 并选择“打开”；不要全局关闭 Gatekeeper。需要正式公开分发体验时，仍须完成
-Developer ID 签名、公证与干净设备验收。
+当前 Preview 使用 ad-hoc 签名，尚未完成 Developer ID 签名与 Apple 公证。首次打开时：
+
+1. 把 `CodexPets.app` 移到“应用程序”，尝试打开一次；
+2. 前往“系统设置 → 隐私与安全”，在安全性区域点击“仍要打开”；
+3. 如果该入口没有出现，可只解除此 App 的隔离标记：
+
+```bash
+xattr -dr com.apple.quarantine /Applications/CodexPets.app
+open /Applications/CodexPets.app
+```
+
+不要全局关闭 Gatekeeper。需要正式公开分发体验时，仍须完成 Developer ID 签名、公证与干净设备验收。
 
 ## 当前状态
 

@@ -31,7 +31,10 @@ test("server-renders the finished CodexPets landing page", async () => {
   assert.match(html, /<title>CodexPets/);
   assert.match(html, /把 Codex 的小宠物/);
   assert.match(html, /CodexPets-macOS-universal\.zip/);
-  assert.match(html, /尚未完成 Apple 公证/);
+  assert.match(html, /首次安装需在“隐私与安全”中允许打开/);
+  assert.match(html, /点击“仍要打开”/);
+  assert.match(html, /xattr -dr com\.apple\.quarantine \/Applications\/CodexPets\.app/);
+  assert.match(html, /不要全局关闭 Gatekeeper/);
   assert.match(html, /不收集使用数据/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/);
 });
