@@ -66,4 +66,4 @@ jobs:
           --verify-tag
           --latest
           --title "CodexPets $GITHUB_REF_NAME Preview"
-          --notes "开源预览版，支持 macOS 14+、Apple Silicon 与 Intel。当前安装包使用 ad-hoc 签名，尚未完成 Developer ID 签名与 Apple 公证；首次打开请在访达中右键 CodexPets.app 并选择‘打开’。不要全局关闭 Gatekeeper。"
+          --notes "开源预览版，支持 macOS 14+、Apple Silicon 与 Intel。当前安装包使用 ad-hoc 签名，尚未完成 Developer ID 签名与 Apple 公证。首次打开：先把 CodexPets.app 移到‘应用程序’并尝试打开一次，再前往‘系统设置 → 隐私与安全’，点击‘仍要打开’。若入口未出现，可执行：xattr -dr com.apple.quarantine /Applications/CodexPets.app。不要全局关闭 Gatekeeper。"
