@@ -1,0 +1,69 @@
+name: Build macOS preview
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Run unit tests
+        run: >-
+          xcodebuild
+          -project CodexPets.xcodeproj
+          -scheme CodexPets
+          -destination 'platform=macOS'
+          -derivedDataPath "$RUNNER_TEMP/CodexPetsTests"
+          CODE_SIGNING_ALLOWED=NO
+          test
+
+      - name: Build Universal release
+        run: >-
+          xcodebuild
+          -project CodexPets.xcodeproj
+          -scheme CodexPets
+          -configuration Release
+          -derivedDataPath "$RUNNER_TEMP/CodexPetsRelease"
+          CODE_SIGNING_ALLOWED=NO
+          ARCHS="arm64 x86_64"
+          ONLY_ACTIVE_ARCH=NO
+          build
+
+      - name: Package preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          app="$RUNNER_TEMP/CodexPetsRelease/Build/Products/Release/CodexPets.app"
+          archive="$RUNNER_TEMP/CodexPets-macOS-universal.zip"
+          checksum="$RUNNER_TEMP/SHA256SUMS.txt"
+          /usr/bin/codesign --force --deep --sign - --timestamp=none "$app"
+          /usr/bin/codesign --verify --deep --strict --verbose=2 "$app"
+          /usr/bin/lipo -archs "$app/Contents/MacOS/CodexPets"
+          /usr/bin/ditto -c -k --sequesterRsrc --keepParent "$app" "$archive"
+          shasum -a 256 "$archive" > "$checksum"
+
+      - name: Publish prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release create "$GITHUB_REF_NAME"
+          "$RUNNER_TEMP/CodexPets-macOS-universal.zip"
+          "$RUNNER_TEMP/SHA256SUMS.txt"
+          --verify-tag
+          --prerelease
+          --title "CodexPets $GITHUB_REF_NAME Preview"
+          --notes "开源预览版，支持 macOS 14+、Apple Silicon 与 Intel。当前安装包使用 ad-hoc 签名，尚未完成 Developer ID 签名与 Apple 公证；首次打开请在访达中右键 CodexPets.app 并选择‘打开’。不要全局关闭 Gatekeeper。"
