@@ -54,7 +54,7 @@ jobs:
           /usr/bin/codesign --verify --deep --strict --verbose=2 "$app"
           /usr/bin/lipo -archs "$app/Contents/MacOS/CodexPets"
           /usr/bin/ditto -c -k --sequesterRsrc --keepParent "$app" "$archive"
-          shasum -a 256 "$archive" > "$checksum"
+          (cd "$RUNNER_TEMP" && shasum -a 256 CodexPets-macOS-universal.zip > SHA256SUMS.txt)
 
       - name: Publish prerelease
         env:
