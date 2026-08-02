@@ -1,0 +1,19 @@
+.DS_Store
+DerivedData/
+Build/
+build/
+*.xcuserstate
+*.tsbuildinfo
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+
+# Local runtime data and generated release packages
+*.dmg
+*.zip
+*.app
+
+# Keep operational reports local; publish only active product specs.
+Docs/*
+!Docs/PRD_MacApp_for_Codex_v2.0.md
+!Docs/IMPLEMENTATION_PLAN_v1.1.md
+!Docs/Prompt_Pack_v1.0.md
