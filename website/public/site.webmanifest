@@ -1,0 +1,11 @@
+{
+  "name": "CodexPets",
+  "short_name": "CodexPets",
+  "description": "免费开源、完全离线的 macOS 动态桌面宠物。",
+  "lang": "zh-CN",
+  "start_url": "/codex-pets/",
+  "scope": "/codex-pets/",
+  "display": "browser",
+  "background_color": "#f6f1e8",
+  "theme_color": "#f6f1e8"
+}

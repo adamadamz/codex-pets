@@ -8,6 +8,7 @@ Codex 动态宠物 → macOS 桌面伙伴。读取标准宠物图集、渲染和
 - 下载：<https://github.com/adamadamz/codex-pets/releases>
 - 最新产品规格：[`Docs/PRD_MacApp_for_Codex_v2.1.md`](Docs/PRD_MacApp_for_Codex_v2.1.md)
 - Mac App Store 提交清单：[`Docs/APP_STORE_RELEASE_CHECKLIST.md`](Docs/APP_STORE_RELEASE_CHECKLIST.md)
+- SEO、AEO 与 AI Agent 搜索策略：[`Docs/SEO_AEO_AI_SEARCH_STRATEGY.md`](Docs/SEO_AEO_AI_SEARCH_STRATEGY.md)
 - Codex 提示词与蒸馏方案：[`Docs/Prompt_Pack_v1.0.md`](Docs/Prompt_Pack_v1.0.md)
 
 ## 下载 Preview

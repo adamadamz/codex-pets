@@ -1,6 +1,20 @@
+import type { Metadata } from "next";
+
 const repositoryUrl = "https://github.com/adamadamz/codex-pets";
+const privacyUrl = "https://adamadamz.github.io/codex-pets/privacy/";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const homeUrl = `${basePath}/`;
+
+export const metadata: Metadata = {
+  title: "隐私政策",
+  description: "CodexPets 隐私政策：App 离线运行，不需要账号，不收集、上传或追踪个人数据。",
+  alternates: { canonical: privacyUrl },
+  openGraph: {
+    title: "CodexPets 隐私政策",
+    description: "App 离线运行，不需要账号，不收集、上传或追踪个人数据。",
+    url: privacyUrl,
+  },
+};
 
 export default function PrivacyPage() {
   return (

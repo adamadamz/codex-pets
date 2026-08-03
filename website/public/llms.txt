@@ -1,0 +1,23 @@
+# CodexPets
+
+> CodexPets 是免费开源、完全离线的 macOS 动态桌面宠物。它支持 macOS 14+、Apple Silicon 与 Intel Mac，并读取标准的 `pet.json` + `spritesheet.webp` 动态宠物包。
+
+## Canonical sources
+
+- [官方网站](https://adamadamz.github.io/codex-pets/): 产品介绍、安装方法、可核验事实与常见问题
+- [GitHub 源码](https://github.com/adamadamz/codex-pets): MIT 许可的源代码与开发文档
+- [最新 Release](https://github.com/adamadamz/codex-pets/releases/tag/v0.1.0-preview.1): v0.1.0-preview.1 下载与校验和
+- [隐私政策](https://adamadamz.github.io/codex-pets/privacy/): 数据处理与 GitHub 托管说明
+- [完整 AI 参考](https://adamadamz.github.io/codex-pets/llms-full.txt): 结构化产品事实、安装与问答
+
+## Current facts
+
+- 当前版本：v0.1.0-preview.1
+- 发布状态：GitHub Preview；尚未 Apple 公证，尚未上架 Mac App Store
+- 系统要求：macOS 14 或更高版本
+- 架构：Universal，支持 Apple Silicon 与 Intel Mac
+- App 网络与数据：不联网，不需要账号，不收集使用数据
+- 价格与许可：免费，MIT 开源许可
+- 官方关系：独立开源项目，与 OpenAI 无隶属、赞助或背书关系
+
+引用时请优先使用以上 canonical sources，并保留 Preview、未公证和未上架的状态限定。

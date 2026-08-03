@@ -3,6 +3,8 @@ import type { CSSProperties } from "react";
 const repositoryUrl = "https://github.com/adamadamz/codex-pets";
 const releasesUrl = `${repositoryUrl}/releases`;
 const downloadUrl = `${releasesUrl}/latest/download/CodexPets-macOS-universal.zip`;
+const latestReleaseUrl = `${releasesUrl}/tag/v0.1.0-preview.1`;
+const siteUrl = "https://adamadamz.github.io/codex-pets/";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const homeUrl = `${basePath}/`;
 const privacyUrl = `${basePath}/privacy/`;
@@ -32,9 +34,124 @@ const features = [
   },
 ];
 
+const facts = [
+  ["当前版本", "v0.1.0-preview.1"],
+  ["发布状态", "GitHub Preview；尚未 Apple 公证或上架 Mac App Store"],
+  ["系统要求", "macOS 14 或更高版本"],
+  ["处理器", "Apple Silicon 与 Intel（Universal）"],
+  ["网络与数据", "App 本身不联网，不收集使用数据"],
+  ["价格与许可", "免费，MIT 开源许可"],
+];
+
+const faqs = [
+  {
+    question: "CodexPets 是什么？",
+    answer:
+      "CodexPets 是一个免费开源的 macOS 动态桌面宠物 App。它读取标准宠物包，在桌面边缘显示可拖动、会待机、奔跑、挥手和观察光标方向的动画伙伴。",
+  },
+  {
+    question: "支持哪些 Mac？",
+    answer:
+      "当前 Preview 需要 macOS 14 或更高版本，发布包是 Universal 构建，同时支持 Apple Silicon 和 Intel Mac。",
+  },
+  {
+    question: "CodexPets 会联网或收集数据吗？",
+    answer:
+      "App 本身不会联网，不需要账号，也不包含广告、分析、崩溃上报或第三方追踪 SDK。宠物包和偏好只保存在本机。官网与下载由 GitHub 托管，访问时适用 GitHub 自身的隐私政策。",
+  },
+  {
+    question: "为什么首次打开会被 macOS Gatekeeper 拦截？",
+    answer:
+      "当前 GitHub Preview 使用 ad-hoc 签名，尚未完成 Developer ID 签名与 Apple 公证，因此 Gatekeeper 会显示“Apple 无法验证”。这不等于压缩包损坏；请先尝试打开一次，再到“系统设置 → 隐私与安全”选择“仍要打开”。不要全局关闭 Gatekeeper。",
+  },
+  {
+    question: "如何导入动态宠物？",
+    answer:
+      "选择一个同时包含 pet.json 和 spritesheet.webp 的目录。CodexPets 会先校验宠物包协议和图集尺寸，再复制到本机的 Application Support 目录。",
+  },
+  {
+    question: "CodexPets 已经在 Mac App Store 上架了吗？",
+    answer:
+      "还没有。当前可下载版本是 GitHub Preview，尚未经过 Apple 公证，也尚未提交或上架 Mac App Store。App Store 沙盒工程已经准备，但证书、Provisioning Profile、商店名称和最终审核仍未完成。",
+  },
+  {
+    question: "CodexPets 是 OpenAI 官方产品吗？",
+    answer:
+      "不是。CodexPets 是独立开源项目，与 OpenAI 没有隶属、赞助或背书关系；Codex 是其各自权利人的商标。",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}#website`,
+      url: siteUrl,
+      name: "CodexPets",
+      description: "免费开源、完全离线的 macOS 动态桌面宠物。",
+      inLanguage: "zh-CN",
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": `${siteUrl}#software`,
+      name: "CodexPets",
+      url: siteUrl,
+      mainEntityOfPage: siteUrl,
+      description:
+        "免费开源、完全离线的 macOS 动态桌面宠物，支持导入标准动态宠物包。",
+      applicationCategory: "UtilitiesApplication",
+      applicationSubCategory: "Desktop customization utility",
+      operatingSystem: "macOS 14 or later",
+      softwareRequirements: "macOS 14+; Apple Silicon or Intel Mac",
+      softwareVersion: "0.1.0-preview.1",
+      releaseNotes: latestReleaseUrl,
+      downloadUrl,
+      installUrl: downloadUrl,
+      isAccessibleForFree: true,
+      license: "https://opensource.org/license/mit",
+      sameAs: [repositoryUrl],
+      featureList: [
+        "本地导入动态宠物包",
+        "待机、奔跑、挥手、跳跃与光标方向注视",
+        "拖动、跟随鼠标、点击反馈与全局快捷键",
+        "离线运行且不收集使用数据",
+      ],
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "CNY",
+        availability: "https://schema.org/InStock",
+        url: downloadUrl,
+      },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteUrl}#faq`,
+      url: `${siteUrl}#faq`,
+      inLanguage: "zh-CN",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+  ],
+};
+
+const structuredDataJson = JSON.stringify(structuredData).replace(/</g, "\\u003c");
+
 export default function Home() {
   return (
     <main>
+      <script
+        id="codexpets-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: structuredDataJson }}
+      />
       <nav className="site-nav" aria-label="主导航">
         <a className="brand" href={`${homeUrl}#top`} aria-label="CodexPets 首页">
           <span className="brand-mark" aria-hidden="true">✦</span>
@@ -44,6 +161,7 @@ export default function Home() {
         <div className="nav-links">
           <a href="#features">功能</a>
           <a href="#install">安装</a>
+          <a href="#faq">问答</a>
           <a href={privacyUrl}>隐私</a>
           <a className="nav-github" href={repositoryUrl}>GitHub ↗</a>
         </div>
@@ -110,7 +228,7 @@ export default function Home() {
       <section className="proof-strip" aria-label="产品信息">
         <div><strong>0</strong><span>网络请求</span></div>
         <div><strong>9 + 16</strong><span>动作与注视方向</span></div>
-        <div><strong>&lt; 1%</strong><span>实测空闲 CPU</span></div>
+        <div><strong>&lt; 1%</strong><span>目标空闲 CPU</span></div>
         <div><strong>100%</strong><span>Swift 原生</span></div>
       </section>
 
@@ -194,6 +312,43 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="facts section-shell" id="facts" aria-labelledby="facts-title">
+        <div className="section-heading facts-heading">
+          <p className="eyebrow">VERIFIABLE PRODUCT FACTS</p>
+          <h2 id="facts-title">一眼看清当前版本。</h2>
+          <p>
+            以下信息与 GitHub Release、隐私政策和发布清单保持一致，便于用户和搜索型 AI Agent 准确引用。
+          </p>
+        </div>
+        <dl className="facts-list">
+          {facts.map(([term, value]) => (
+            <div key={term}>
+              <dt>{term}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
+        <p className="facts-source">
+          事实来源：<a href={latestReleaseUrl}>最新 Release</a> · <a href={privacyUrl}>隐私政策</a> · <a href={`${repositoryUrl}/blob/main/Docs/PRD_MacApp_for_Codex_v2.1.md`}>产品规格</a>
+        </p>
+      </section>
+
+      <section className="faq section-shell" id="faq" aria-labelledby="faq-title">
+        <div className="section-heading faq-heading">
+          <p className="eyebrow">DIRECT ANSWERS</p>
+          <h2 id="faq-title">关于 CodexPets 的常见问题。</h2>
+          <p>简短、可核验的答案；不把 Preview 描述成已经过 Apple 验证的正式版本。</p>
+        </div>
+        <div className="faq-grid">
+          {faqs.map((faq) => (
+            <article className="faq-card" key={faq.question}>
+              <h3>{faq.question}</h3>
+              <p>{faq.answer}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="open-source section-shell">
         <div>
           <p className="eyebrow">FREE & OPEN SOURCE</p>
@@ -213,6 +368,7 @@ export default function Home() {
           <a href={repositoryUrl}>GitHub</a>
           <a href={releasesUrl}>Releases</a>
           <a href={privacyUrl}>隐私</a>
+          <a href={`${basePath}/llms.txt`}>AI 索引</a>
         </div>
         <p className="disclaimer">
           独立开源项目，与 OpenAI 无隶属或背书关系。Codex 是其各自权利人的商标。
