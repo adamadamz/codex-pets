@@ -29,6 +29,7 @@ final class PetPhysics {
 
     private(set) var mode: PetMotionMode = .idle
     private(set) var center: CGPoint = .zero
+    private(set) var isRunning = false
 
     // MARK: 内部状态
     private var velocity: PetVelocity = PetVelocity(dx: 0, dy: 0)
@@ -62,17 +63,19 @@ final class PetPhysics {
 
     // MARK: - 生命周期
 
-    func start(at point: CGPoint) {
+    func start(at point: CGPoint, playGreeting: Bool = true) {
+        isRunning = true
         center = point
         mode = .idle
         lastInteraction = CACurrentMediaTime()
         lastTickTime = CACurrentMediaTime()
         resetAnimation(to: .idle)
-        transientAnimation = .waving
+        transientAnimation = playGreeting ? .waving : nil
         setFPS(config.activeFPS)
     }
 
     func stop() {
+        isRunning = false
         timer?.invalidate()
         timer = nil
         currentFPS = 0
@@ -102,6 +105,7 @@ final class PetPhysics {
     // MARK: - 交互输入
 
     func noteInteraction() {
+        guard isRunning else { return }
         lastInteraction = CACurrentMediaTime()
         setFPS(config.activeFPS)
     }

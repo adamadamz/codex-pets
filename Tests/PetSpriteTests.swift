@@ -71,6 +71,33 @@ final class PetSpriteTests: XCTestCase {
         ))
     }
 
+    func testLoadRejectsPackageIDsThatWouldCollideAfterSanitizing() throws {
+        for id in ["flower/panda", "flower:panda", "../"] {
+            let packageURL = FileManager.default.temporaryDirectory
+                .appendingPathComponent(UUID().uuidString, isDirectory: true)
+            try FileManager.default.createDirectory(
+                at: packageURL,
+                withIntermediateDirectories: true
+            )
+            defer { try? FileManager.default.removeItem(at: packageURL) }
+
+            let manifest = PetPackageManifest(
+                id: id,
+                displayName: "Invalid ID",
+                description: nil,
+                spriteVersionNumber: 1,
+                spritesheetPath: "spritesheet.webp"
+            )
+            try JSONEncoder().encode(manifest).write(
+                to: packageURL.appendingPathComponent("pet.json")
+            )
+
+            XCTAssertThrowsError(try DynamicPetAsset.load(from: packageURL)) { error in
+                XCTAssertEqual(error as? PetPackageError, .invalidManifest)
+            }
+        }
+    }
+
     func testLoadRejectsTransparentRequiredFrame() throws {
         let packageURL = try makeTemporaryPackage(emptyRequiredFrame: (row: 0, column: 0))
         defer { try? FileManager.default.removeItem(at: packageURL) }

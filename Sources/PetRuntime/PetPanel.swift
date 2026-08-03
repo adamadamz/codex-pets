@@ -46,6 +46,8 @@ final class PetController {
     private let physics: PetPhysics
     private var renderState = PetRenderState()
     private var hasShown = false
+    private var lastPanelOrigin: CGPoint?
+    private var lastRenderedState: PetRenderState?
 
     var onRequestMenu: ((NSPoint) -> Void)?
 
@@ -108,11 +110,20 @@ final class PetController {
 
         physics.onFrame = { [weak self] center, state in
             guard let self else { return }
-            self.renderState = state
             let size = self.config.renderSize
-            self.panel.setFrameOrigin(CGPoint(x: (center.x - size.width / 2).rounded(),
-                                              y: (center.y - size.height / 2).rounded()))
-            self.swiftUIHost?.rootView = self.petRootView()
+            let origin = CGPoint(
+                x: (center.x - size.width / 2).rounded(),
+                y: (center.y - size.height / 2).rounded()
+            )
+            if origin != self.lastPanelOrigin {
+                self.panel.setFrameOrigin(origin)
+                self.lastPanelOrigin = origin
+            }
+            if state != self.lastRenderedState {
+                self.renderState = state
+                self.swiftUIHost?.rootView = self.petRootView()
+                self.lastRenderedState = state
+            }
         }
     }
 
@@ -128,7 +139,7 @@ final class PetController {
 
     func show() {
         let start = hasShown ? physics.center : initialCenter()
-        physics.start(at: start)
+        physics.start(at: start, playGreeting: !hasShown)
         hasShown = true
         panel.orderFrontRegardless()
     }
@@ -157,8 +168,10 @@ final class PetController {
             swiftUIHost?.frame = CGRect(origin: .zero, size: c.renderSize)
             panel.setFrameOrigin(CGPoint(x: (center.x - c.renderSize.width / 2).rounded(),
                                          y: (center.y - c.renderSize.height / 2).rounded()))
+            lastPanelOrigin = nil
+            lastRenderedState = nil
+            swiftUIHost?.rootView = petRootView()
         }
-        swiftUIHost?.rootView = petRootView()
         physics.noteInteraction()
     }
 

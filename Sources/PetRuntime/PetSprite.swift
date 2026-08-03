@@ -9,6 +9,12 @@ struct PetPackageManifest: Codable, Equatable {
     let spritesheetPath: String
 
     var resolvedSpriteVersionNumber: Int { spriteVersionNumber ?? 1 }
+
+    static func isValidPackageID(_ id: String) -> Bool {
+        guard !id.isEmpty else { return false }
+        let allowed = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "-_"))
+        return id.unicodeScalars.allSatisfy { allowed.contains($0) }
+    }
 }
 
 struct PetSpriteContract: Equatable {
@@ -104,7 +110,7 @@ struct DynamicPetAsset {
         }
         guard let data = try? Data(contentsOf: manifestURL),
               let manifest = try? JSONDecoder().decode(PetPackageManifest.self, from: data),
-              !manifest.id.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              PetPackageManifest.isValidPackageID(manifest.id),
               !manifest.displayName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               !manifest.spritesheetPath.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         else {

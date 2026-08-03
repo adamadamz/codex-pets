@@ -44,6 +44,21 @@ final class InteractionRecoveryTests: XCTestCase {
         XCTAssertEqual(Set(HotKeyBinding.defaults.map(\.action.rawValue)).count, 2)
     }
 
+    func testStoppedPhysicsDoesNotWakeForConfigInteraction() {
+        let physics = PetPhysics(config: PetConfig())
+
+        XCTAssertFalse(physics.isRunning)
+        physics.noteInteraction()
+        XCTAssertFalse(physics.isRunning)
+
+        physics.start(at: .zero, playGreeting: false)
+        XCTAssertTrue(physics.isRunning)
+
+        physics.stop()
+        physics.noteInteraction()
+        XCTAssertFalse(physics.isRunning)
+    }
+
     func testCarbonRegistersAndUnregistersBothDefaultHotKeys() {
         let center = HotKeyCenter.shared
         center.unregister()

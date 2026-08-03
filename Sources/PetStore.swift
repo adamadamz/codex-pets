@@ -98,13 +98,15 @@ final class PetStore {
         }
 
         let source = try DynamicPetAsset.load(from: sourceURL)
-        let safeID = Self.safePackageID(source.manifest.id)
-        guard !safeID.isEmpty else { throw PetPackageError.invalidManifest }
+        let packageID = source.manifest.id
+        guard PetPackageManifest.isValidPackageID(packageID) else {
+            throw PetPackageError.invalidManifest
+        }
 
         let packages = try petPackagesDirectory()
-        let destination = packages.appendingPathComponent(safeID, isDirectory: true)
+        let destination = packages.appendingPathComponent(packageID, isDirectory: true)
         let staging = packages.appendingPathComponent(
-            ".\(safeID)-staging-\(UUID().uuidString)",
+            ".\(packageID)-staging-\(UUID().uuidString)",
             isDirectory: true
         )
         let fileManager = FileManager.default
@@ -116,7 +118,7 @@ final class PetStore {
                 to: staging.appendingPathComponent("spritesheet.webp")
             )
             let storedManifest = PetPackageManifest(
-                id: safeID,
+                id: packageID,
                 displayName: source.manifest.displayName,
                 description: source.manifest.description,
                 spriteVersionNumber: source.contract.version,
@@ -141,7 +143,7 @@ final class PetStore {
 
         let installed = try DynamicPetAsset.load(from: destination)
         var newConfig = config
-        newConfig.selectedPetID = safeID
+        newConfig.selectedPetID = packageID
         newConfig.assetFileName = "spritesheet.webp"
         newConfig.intrinsicSize = CGSize(
             width: PetSpriteContract.cellWidth,
@@ -155,7 +157,7 @@ final class PetStore {
             height: (newConfig.intrinsicSize.height / 3).rounded()
         )
         let storedConfig = updateConfig(newConfig)
-        guard storedConfig.selectedPetID == safeID else {
+        guard storedConfig.selectedPetID == packageID else {
             throw CocoaError(.fileWriteUnknown)
         }
         return installed
@@ -172,13 +174,10 @@ final class PetStore {
     }
 
     private func installedPetPackageURL(for id: String) throws -> URL {
-        try petPackagesDirectory().appendingPathComponent(Self.safePackageID(id), isDirectory: true)
-    }
-
-    private static func safePackageID(_ id: String) -> String {
-        let allowed = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "-_"))
-        return id.unicodeScalars.map { allowed.contains($0) ? Character(String($0)) : "-" }
-            .reduce(into: "") { $0.append($1) }
+        guard PetPackageManifest.isValidPackageID(id) else {
+            throw PetPackageError.invalidManifest
+        }
+        return try petPackagesDirectory().appendingPathComponent(id, isDirectory: true)
     }
 
     static func discoveryRoots(
