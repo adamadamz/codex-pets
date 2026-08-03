@@ -56,15 +56,17 @@ final class PetStore {
         return try? DynamicPetAsset.load(from: packageURL)
     }
 
-    /// 同时发现 App 已保存的包与 Codex 自定义宠物目录。失败包会被忽略，
-    /// 选择时仍会再次完整校验，避免把一张普通图片当成宠物。
+    /// 发现可直接访问的宠物目录。Mac App Store 沙盒构建不能静默读取
+    /// ~/.codex/pets；用户需要通过选择器明确导入，随后资源会复制进 App Support。
     func availablePetAssets() -> [DynamicPetAsset] {
         var assetsByID: [String: DynamicPetAsset] = [:]
-        let home = FileManager.default.homeDirectoryForCurrentUser
-        let codexPets = home.appendingPathComponent(".codex/pets", isDirectory: true)
         let appPets = (try? petPackagesDirectory())
 
-        for root in [codexPets, appPets].compactMap({ $0 }) {
+        for root in Self.discoveryRoots(
+            appPackagesURL: appPets,
+            homeDirectory: FileManager.default.homeDirectoryForCurrentUser,
+            includeCodexDirectory: Self.canScanCodexDirectory
+        ) {
             guard let children = try? FileManager.default.contentsOfDirectory(
                 at: root,
                 includingPropertiesForKeys: [.isDirectoryKey],
@@ -88,6 +90,13 @@ final class PetStore {
     /// 源目录与旧版 pet.png 都不会被修改。
     @discardableResult
     func installPetPackage(from sourceURL: URL) throws -> DynamicPetAsset {
+        let didStartSecurityScope = sourceURL.startAccessingSecurityScopedResource()
+        defer {
+            if didStartSecurityScope {
+                sourceURL.stopAccessingSecurityScopedResource()
+            }
+        }
+
         let source = try DynamicPetAsset.load(from: sourceURL)
         let safeID = Self.safePackageID(source.manifest.id)
         guard !safeID.isEmpty else { throw PetPackageError.invalidManifest }
@@ -170,6 +179,29 @@ final class PetStore {
         let allowed = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "-_"))
         return id.unicodeScalars.map { allowed.contains($0) ? Character(String($0)) : "-" }
             .reduce(into: "") { $0.append($1) }
+    }
+
+    static func discoveryRoots(
+        appPackagesURL: URL?,
+        homeDirectory: URL,
+        includeCodexDirectory: Bool
+    ) -> [URL] {
+        var roots: [URL] = []
+        if includeCodexDirectory {
+            roots.append(homeDirectory.appendingPathComponent(".codex/pets", isDirectory: true))
+        }
+        if let appPackagesURL {
+            roots.append(appPackagesURL)
+        }
+        return roots
+    }
+
+    private static var canScanCodexDirectory: Bool {
+#if APP_STORE
+        false
+#else
+        true
+#endif
     }
 
 }

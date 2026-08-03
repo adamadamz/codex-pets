@@ -54,13 +54,16 @@
 
 ### 阶段 D：性能与发布准备
 
-状态：未开始。
+状态：App Store 静态工程准备已开始；Apple 后台与运行时验收待完成。
 
 - [ ] 10 次抠图耗时中位数。
 - [ ] 空闲/跟随 CPU、内存与 Energy Impact。
-- [ ] 正式 AppIcon。
+- [x] 16px–1024px AppIcon 候选资源。
 - [ ] 外部产品名称清查。
-- [ ] Developer ID、Hardened Runtime、公证和 DMG。
+- [x] 独立 `AppStore` 构建配置、App Sandbox、用户选择目录权限与 Privacy Manifest。
+- [ ] App Store Connect 名称占位、Apple Distribution 证书与 Mac App Store provisioning。
+- [ ] App Store Connect 元数据、截图、审核备注与上传归档。
+- [ ] Developer ID、公证和 DMG（仅 GitHub 独立分发渠道需要）。
 - [ ] 干净 macOS 14+ 环境安装验收。
 
 ## 3. 本轮验收标准

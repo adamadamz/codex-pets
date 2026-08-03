@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   LastUpgradeVersion = "1430"
+   version = "1.7">
+   <BuildAction
+      parallelizeBuildables = "YES"
+      buildImplicitDependencies = "YES"
+      runPostActionsOnFailure = "NO">
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A0D0284318A3EE7DCE1F2389"
+               BuildableName = "CodexPets.app"
+               BlueprintName = "CodexPets"
+               ReferencedContainer = "container:CodexPets.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4A338191A7F58F11976F9CF9"
+               BuildableName = "CodexPetsTests.xctest"
+               BlueprintName = "CodexPetsTests"
+               ReferencedContainer = "container:CodexPets.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "NO">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "A0D0284318A3EE7DCE1F2389"
+            BuildableName = "CodexPets.app"
+            BlueprintName = "CodexPets"
+            ReferencedContainer = "container:CodexPets.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+      <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4A338191A7F58F11976F9CF9"
+               BuildableName = "CodexPetsTests.xctest"
+               BlueprintName = "CodexPetsTests"
+               ReferencedContainer = "container:CodexPets.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
+      <CommandLineArguments>
+      </CommandLineArguments>
+   </TestAction>
+   <LaunchAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      launchStyle = "0"
+      useCustomWorkingDirectory = "NO"
+      ignoresPersistentStateOnLaunch = "NO"
+      debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
+      allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "A0D0284318A3EE7DCE1F2389"
+            BuildableName = "CodexPets.app"
+            BlueprintName = "CodexPets"
+            ReferencedContainer = "container:CodexPets.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+      <CommandLineArguments>
+      </CommandLineArguments>
+   </LaunchAction>
+   <ProfileAction
+      buildConfiguration = "Release"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      savedToolIdentifier = ""
+      useCustomWorkingDirectory = "NO"
+      debugDocumentVersioning = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "A0D0284318A3EE7DCE1F2389"
+            BuildableName = "CodexPets.app"
+            BlueprintName = "CodexPets"
+            ReferencedContainer = "container:CodexPets.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </ProfileAction>
+   <AnalyzeAction
+      buildConfiguration = "Debug">
+   </AnalyzeAction>
+   <ArchiveAction
+      buildConfiguration = "AppStore"
+      revealArchiveInOrganizer = "YES">
+   </ArchiveAction>
+</Scheme>

@@ -1,8 +1,8 @@
 import Foundation
 import ServiceManagement
 
-/// 开机自启（macOS 13+ 的 SMAppService）。
-/// 注意：若日后上 Mac App Store 并开启沙盒，此能力需改用 Login Item Helper 并重新评估。
+/// 开机自启（macOS 13+ 的 SMAppService.mainApp）。
+/// 该 API 会把控制权交给系统“登录项”设置，兼容沙盒且不需要额外 Helper。
 enum LaunchAtLogin {
 
     static var isEnabled: Bool {

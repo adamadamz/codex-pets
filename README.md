@@ -6,7 +6,8 @@ Codex 动态宠物 → macOS 桌面伙伴。读取标准宠物图集、渲染和
 
 - 官网：<https://adamadamz.github.io/codex-pets/>
 - 下载：<https://github.com/adamadamz/codex-pets/releases>
-- 最新产品规格：[`Docs/PRD_MacApp_for_Codex_v2.0.md`](Docs/PRD_MacApp_for_Codex_v2.0.md)
+- 最新产品规格：[`Docs/PRD_MacApp_for_Codex_v2.1.md`](Docs/PRD_MacApp_for_Codex_v2.1.md)
+- Mac App Store 提交清单：[`Docs/APP_STORE_RELEASE_CHECKLIST.md`](Docs/APP_STORE_RELEASE_CHECKLIST.md)
 - Codex 提示词与蒸馏方案：[`Docs/Prompt_Pack_v1.0.md`](Docs/Prompt_Pack_v1.0.md)
 
 ## 下载 Preview
@@ -26,6 +27,17 @@ open /Applications/CodexPets.app
 
 不要全局关闭 Gatekeeper。需要正式公开分发体验时，仍须完成 Developer ID 签名、公证与干净设备验收。
 
+## Mac App Store 路线
+
+工程现在包含独立的 `AppStore` 构建配置：开启 App Sandbox，只允许读取用户在系统选择器中
+明确选中的宠物包，并声明“Data Not Collected”和所需的 Required Reason API。通过 Mac App Store
+安装后由 Apple 完成签名和分发，不会出现 GitHub Preview 的 Gatekeeper 未公证警告。
+
+当前尚不能声称已经提交：本机已通过 Apple Development 沙盒签名并生成 Universal
+`.xcarchive`，但 App Store 导出明确缺少 `Mac Installer Distribution` 证书和
+`com.decodegroup.codexpets` 的 Mac App Store provisioning profile；同时仍需完成商店名称、
+法律信息和截图。
+
 ## 当前状态
 
 动态宠物主链路已完成第一次静态收敛：
@@ -34,7 +46,7 @@ open /Applications/CodexPets.app
 - Xcode 26.6 无签名 Debug build 成功
 - 只接受 Codex `pet.json + spritesheet.webp` 动态宠物包，不再把普通照片当宠物
 - 兼容 v1 的 9 行动作图集，优先支持 v2 的 9 组动作 + 16 向注视
-- 自动发现 `~/.codex/pets/` 中的自定义宠物，也可从菜单导入本地宠物包
+- GitHub Preview 自动发现 `~/.codex/pets/`；Mac App Store 沙盒版改为用户从系统选择器明确导入
 - 旧版 `pet.png` 保留在本机作为迁移数据，但不再进入渲染主路径
 - 物理跟随、惯性和阻尼已改为帧率无关计算
 - 多显示器选择具备中心、相交面积和最近距离三级兜底
@@ -113,7 +125,8 @@ Sources/
 - [ ] 运行时交互验收
 - [ ] v2 动作切换与 16 向注视运行时验收
 - [ ] 性能基线实测：空闲 CPU <1% / 跟随 <5% / 内存 <120MB
-- [ ] 正式 AppIcon 图片（Asset Catalog 结构已有，图片仍为占位）
+- [x] 正式尺寸 AppIcon（16px–1024px，商店提交前仍需最终品牌确认）
+- [x] `AppStore` 沙盒配置、用户选择目录权限与 Privacy Manifest
 - [x] 名称初筛：外部工作名 `FuzzOrbit` 为 `Conditional Go`；CNIPA、法律近似审查与 Apple 账号占位仍待完成
 - [x] GitHub Pages 官网与 Preview Release 自动化
 - [ ] Developer ID 签名 + 公证 + .dmg 打包脚本

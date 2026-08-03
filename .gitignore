@@ -15,5 +15,7 @@ build/
 # Keep operational reports local; publish only active product specs.
 Docs/*
 !Docs/PRD_MacApp_for_Codex_v2.0.md
+!Docs/PRD_MacApp_for_Codex_v2.1.md
+!Docs/APP_STORE_RELEASE_CHECKLIST.md
 !Docs/IMPLEMENTATION_PLAN_v1.1.md
 !Docs/Prompt_Pack_v1.0.md

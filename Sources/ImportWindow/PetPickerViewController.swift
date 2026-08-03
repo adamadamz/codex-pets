@@ -147,7 +147,7 @@ final class PetPickerViewController: NSViewController {
     @objc private func importPackage() {
         let panel = NSOpenPanel()
         panel.prompt = "导入动态宠物"
-        panel.message = "选择包含 pet.json 和 spritesheet.webp 的宠物目录"
+        panel.message = "选择包含 pet.json 和 spritesheet.webp 的宠物目录；也可以前往 ~/.codex/pets 选择其中一个宠物包"
         panel.canChooseDirectories = true
         panel.canChooseFiles = false
         panel.allowsMultipleSelection = false

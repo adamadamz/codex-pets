@@ -18,6 +18,12 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>14.0</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
+	<key>LSMultipleInstancesProhibited</key>
+	<true/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 
 	<!-- 菜单栏常驻 App：不进 Dock、不进 Cmd-Tab -->
 	<key>LSUIElement</key>

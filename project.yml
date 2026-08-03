@@ -1,4 +1,9 @@
 name: CodexPets
+configs:
+  Debug: debug
+  Release: release
+  AppStore: release
+
 options:
   bundleIdPrefix: com.decodegroup
   deploymentTarget:
@@ -22,20 +27,25 @@ targets:
     platform: macOS
     sources:
       - path: Sources
+      - path: Resources
+        excludes:
+          - Info.plist
+          - CodexPets-AppStore.entitlements
+        buildPhase: resources
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.decodegroup.codexpets
         INFOPLIST_FILE: Resources/Info.plist
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         COMBINE_HIDPI_IMAGES: YES
-        # 沙盒关闭：MVP 走 Developer ID 独立分发。
-        # 若日后上 Mac App Store，需开启沙盒并重新评估
-        # 开机自启（SMAppService）与全局快捷键的可用性。
+        # GitHub Preview 保持独立分发行为；AppStore 配置单独开启沙盒。
         ENABLE_APP_SANDBOX: NO
-    resources:
-      - path: Resources
-        excludes:
-          - Info.plist
+      configs:
+        AppStore:
+          CODE_SIGN_ENTITLEMENTS: Resources/CodexPets-AppStore.entitlements
+          DEVELOPMENT_TEAM: 66HPXF4XN5
+          ENABLE_APP_SANDBOX: YES
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited) APP_STORE"
     dependencies: []
 
   CodexPetsTests:
@@ -49,3 +59,18 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.decodegroup.codexpets.tests
         GENERATE_INFOPLIST_FILE: YES
+
+schemes:
+  CodexPets:
+    build:
+      targets:
+        CodexPets: all
+        CodexPetsTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - CodexPetsTests
+    archive:
+      config: AppStore
